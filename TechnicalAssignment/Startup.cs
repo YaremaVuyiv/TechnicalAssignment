@@ -1,21 +1,36 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TechnicalAssignment.Data;
+using TechnicalAssignment.Data.Repositories;
+using TechnicalAssignment.Data.Repositories.Contracts;
 
 namespace TechnicalAssignment
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("TransactionDbConnection");
+
+            services.AddDbContext<TransactionDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
