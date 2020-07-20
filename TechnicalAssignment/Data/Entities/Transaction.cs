@@ -1,5 +1,4 @@
 ﻿using System;
-using TechnicalAssignment.Models;
 
 namespace TechnicalAssignment.Data.Entities
 {

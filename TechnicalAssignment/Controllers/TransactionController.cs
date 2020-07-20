@@ -107,30 +107,12 @@ namespace TechnicalAssignment.Controllers
 
         private IActionResult GetResponse<T>(TransactionResponseDataModel<T> responseModel)
         {
-            switch (responseModel.StatusCode)
+            if(responseModel.StatusCode == StatusCodes.Status200OK)
             {
-                case StatusCodes.Status415UnsupportedMediaType:
-                    {
-                        return View("Error");
-                    }
-
-                case StatusCodes.Status400BadRequest:
-                    {
-                        return BadRequest(responseModel);
-                    }
-
-                case StatusCodes.Status200OK:
-                    {
-                        return Ok(responseModel.Data);
-                    }
-
-                case StatusCodes.Status500InternalServerError:
-                    {
-                        return StatusCode(StatusCodes.Status500InternalServerError);
-                    }
+                return Ok(responseModel.Data);
             }
 
-            return View("Index");
+            return GetResponse(responseModel as TransactionResponseModel);
         }
     }
 }
