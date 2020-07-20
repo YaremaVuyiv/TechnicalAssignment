@@ -5,6 +5,6 @@ namespace TechnicalAssignment.ResponseModels
 {
     public class TransactionResponseDataModel : TransactionResponseModel
     {
-        public IEnumerable<TransactionModel> Data { get; set; }
+        public IEnumerable<TransactionBaseModel> Data { get; set; }
     }
 }

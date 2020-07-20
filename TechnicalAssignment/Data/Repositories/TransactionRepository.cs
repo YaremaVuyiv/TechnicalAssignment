@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TechnicalAssignment.Data.Entities;
 using TechnicalAssignment.Data.Repositories.Contracts;
 
@@ -13,9 +14,9 @@ namespace TechnicalAssignment.Data.Repositories
             _context = context;
         }
 
-        public async Task CreateAsync(Transaction entity)
+        public async Task CreateAsync(IEnumerable<Transaction> entity)
         {
-            await _context.AddAsync(entity);
+            await _context.AddRangeAsync(entity);
 
             await _context.SaveChangesAsync();
         }

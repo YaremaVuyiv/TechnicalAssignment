@@ -10,7 +10,7 @@
         {
             get
             {
-                return string.IsNullOrEmpty(ErrorMessage);
+                return !string.IsNullOrEmpty(ErrorMessage);
             }
         }
     }

@@ -13,6 +13,8 @@ namespace TechnicalAssignment.Data.Entities
 
         public DateTime Date { get; set; }
 
-        public TransactionStatus Status { get; set; }
+        public virtual TransactionStatus Status { get; set; }
+
+        public long StatusId { get; set; }
     }
 }
