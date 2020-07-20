@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using System.Globalization;
 using TechnicalAssignment.Models;
 
 namespace TechnicalAssignment.Validators
@@ -27,7 +28,8 @@ namespace TechnicalAssignment.Validators
             RuleFor(x => x.Date)
                 .NotNull()
                 .WithMessage(x => $"Transaction date is missing for {x.Id ?? string.Empty} transaction")
-                .Must(x => DateTime.TryParse(x, out _))
+                .Must(x => DateTime.TryParseExact(x, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture,
+                           DateTimeStyles.None,  out _))
                 .WithMessage(x => $"Invalid transaction date for {x.Id ?? string.Empty} transaction"); ;
 
             RuleFor(x => x.Status)
