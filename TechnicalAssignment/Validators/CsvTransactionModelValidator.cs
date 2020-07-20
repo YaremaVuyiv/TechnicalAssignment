@@ -17,7 +17,7 @@ namespace TechnicalAssignment.Validators
                 .NotNull()
                 .WithMessage(x => $"Amount is missing in {x.Id ?? string.Empty} transaction")
                 .Must(x => decimal.TryParse(x, out _))
-                .WithMessage(x => $"Invalid amount for {x.Id ?? string.Empty} transaction"); ;
+                .WithMessage(x => $"Invalid amount for {x.Id ?? string.Empty} transaction");
 
             RuleFor(x => x.CurrencyCode)
                 .NotNull()
@@ -30,13 +30,13 @@ namespace TechnicalAssignment.Validators
                 .WithMessage(x => $"Transaction date is missing for {x.Id ?? string.Empty} transaction")
                 .Must(x => DateTime.TryParseExact(x, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture,
                            DateTimeStyles.None,  out _))
-                .WithMessage(x => $"Invalid transaction date for {x.Id ?? string.Empty} transaction"); ;
+                .WithMessage(x => $"Invalid transaction date for {x.Id ?? string.Empty} transaction");
 
             RuleFor(x => x.Status)
                 .NotNull()
                 .WithMessage(x => $"Status is missing for {x.Id ?? string.Empty} transaction")
                 .Must(x => Enum.TryParse<CsvTransactionStatuses>(x, out _))
-                .WithMessage(x => $"Invalid status for {x.Id ?? string.Empty} transaction"); ;
+                .WithMessage(x => $"Invalid status for {x.Id ?? string.Empty} transaction");
         }
     }
 }
