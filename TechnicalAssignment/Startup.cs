@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -11,7 +11,6 @@ using System.Reflection;
 using TechnicalAssignment.Data;
 using TechnicalAssignment.Data.Repositories;
 using TechnicalAssignment.Data.Repositories.Contracts;
-using TechnicalAssignment.Models;
 using TechnicalAssignment.Parsers;
 using TechnicalAssignment.Parsers.Contracts;
 using TechnicalAssignment.Services;
@@ -36,6 +35,8 @@ namespace TechnicalAssignment
 
             services.AddDbContext<TransactionDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation();

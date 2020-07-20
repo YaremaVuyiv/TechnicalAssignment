@@ -1,13 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Net.Mime;
+using System.Threading.Tasks;
+using TechnicalAssignment.Mediatr.Requests;
+using TechnicalAssignment.ResponseModels;
 
 namespace TechnicalAssignment.Controllers
 {
     [Route("Transaction")]
     public class TransactionController : Controller
     {
+        private readonly IMediator _mediator;
+
+        public TransactionController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet("Index")]
         public IActionResult Index()
         {
@@ -15,15 +24,44 @@ namespace TechnicalAssignment.Controllers
         }
 
         [HttpPost("Index")]
-        public IActionResult Index(IFormFile uploadFile)
+        public async Task<IActionResult> Index(IFormFile uploadFile)
         {
-            var fileExtension = Path.GetExtension(uploadFile.FileName);
-            if (!Constants.AllowedFileExtensions.Contains(fileExtension))
+            var request = new CreateTransactionRequest
             {
-                return View("Error");
+                FileData = uploadFile
+            };
+
+            var result = await _mediator.Send(request);
+
+            return GetResponse(result);
+        }
+
+        private IActionResult GetResponse(TransactionResponseModel responseModel)
+        {
+            switch (responseModel.StatusCode)
+            {
+                case StatusCodes.Status415UnsupportedMediaType:
+                    {
+                        return View("Error");
+                    }
+
+                case StatusCodes.Status400BadRequest:
+                    {
+                        return BadRequest(responseModel);
+                    }
+
+                case StatusCodes.Status200OK:
+                    {
+                        return Content("Congrats");
+                    }
+
+                case StatusCodes.Status500InternalServerError:
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError);
+                    }
             }
 
-            return Ok();
+            return View("Index");
         }
     }
 }

@@ -59,7 +59,7 @@ namespace TechnicalAssignment.Services
             {
                 StatusCode = string.IsNullOrEmpty(errorMessage) ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest,
                 ErrorMessage = errorMessage,
-                Data = MapTransaction(fileExtension, transactions)
+                Data = string.IsNullOrEmpty(errorMessage) ? MapTransaction(fileExtension, transactions) : null
             };
         }
 
