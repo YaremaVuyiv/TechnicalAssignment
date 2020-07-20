@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TechnicalAssignment
+﻿namespace TechnicalAssignment
 {
     public static class Constants
     {
-        public static List<string> AllowedFileExtensions = new List<string>
-        {
-            ".csv",
-            ".xml"
-        };
+        public const string CsvFileExtension = ".csv";
+        public const string XmlFileExtension = ".xml";
     }
 }

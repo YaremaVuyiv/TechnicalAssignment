@@ -12,7 +12,12 @@ using TechnicalAssignment.Data;
 using TechnicalAssignment.Data.Repositories;
 using TechnicalAssignment.Data.Repositories.Contracts;
 using TechnicalAssignment.Models;
+using TechnicalAssignment.Parsers;
+using TechnicalAssignment.Parsers.Contracts;
+using TechnicalAssignment.Services;
+using TechnicalAssignment.Services.Contracts;
 using TechnicalAssignment.Validators;
+using TechnicalAssignment.Validators.Contracts;
 
 namespace TechnicalAssignment
 {
@@ -36,7 +41,9 @@ namespace TechnicalAssignment
                 .AddFluentValidation();
 
             services.AddScoped<ITransactionRepository, TransactionRepository>();
-            services.AddScoped<IValidator<TransactionModel>, TransactionModelValidator>();
+            services.AddScoped<ITransactionParserFactory, TransactionParserFactory>();
+            services.AddScoped<ITransactionValidatorFactory, TransactionValidatorFactory>();
+            services.AddScoped<ITransactionService, TransactionService>();
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
         }
