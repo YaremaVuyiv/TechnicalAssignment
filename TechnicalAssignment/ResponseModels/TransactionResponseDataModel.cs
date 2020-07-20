@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using TechnicalAssignment.Models;
 
 namespace TechnicalAssignment.ResponseModels
 {
-    public class TransactionResponseDataModel : TransactionResponseModel
+    public class TransactionResponseDataModel<T> : TransactionResponseModel
     {
-        public IEnumerable<TransactionBaseModel> Data { get; set; }
+        public IEnumerable<T> Data { get; set; }
     }
 }

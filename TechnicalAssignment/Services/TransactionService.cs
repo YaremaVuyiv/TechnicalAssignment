@@ -30,7 +30,7 @@ namespace TechnicalAssignment.Services
             _mapper = mapper;
         }
 
-        public async Task<TransactionResponseDataModel> ParseAndValidateTransactionAsync(IFormFile file)
+        public async Task<TransactionResponseDataModel<TransactionBaseModel>> ParseAndValidateTransactionAsync(IFormFile file)
         {
             var fileExtension = Path.GetExtension(file.FileName);
             var parser = _transactionParserFactory.Create(fileExtension);
@@ -55,7 +55,7 @@ namespace TechnicalAssignment.Services
 
             var errorMessage = strBuilder.ToString();
 
-            return new TransactionResponseDataModel
+            return new TransactionResponseDataModel<TransactionBaseModel>
             {
                 StatusCode = string.IsNullOrEmpty(errorMessage) ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest,
                 ErrorMessage = errorMessage,
